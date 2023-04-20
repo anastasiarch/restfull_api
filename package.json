@@ -12,19 +12,21 @@
     "url": "git+https://github.com/anastasiarch/restfull_api.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Anastasiia Rohach",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/anastasiarch/restfull_api/issues"
   },
   "homepage": "https://github.com/anastasiarch/restfull_api#readme",
   "dependencies": {
+    "chai-http": "^4.3.0",
     "cucumber": "^6.0.7",
     "mocha": "^10.2.0",
     "supertest": "^6.3.3"
   },
   "devDependencies": {
     "chai": "^4.3.7",
-    "cucumber-pretty": "^6.0.1"
+    "cucumber-pretty": "^6.0.1",
+    "faker": "^5.5.3"
   }
 }

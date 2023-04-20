@@ -1,21 +1,38 @@
-const config = require('../config/config');
-const request = require('supertest')(config.baseUrl);
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const faker = require('faker');
+
+chai.use(chaiHttp);
 
 describe('Register API', () => {
-  let payload = null;
-  let response = null;
+  describe('Successful registration', () => {
+    it('should register a user and return a token', async () => {
+      const payload = {
+        email: 'eve.holt@reqres.in',
+        password: 'pistol',
+      };
 
-  beforeAll(() => {
-    payload = {
-      email: 'eve.holt@reqres.in',
-      password: 'pistol',
-    };
+      const response = await chai.request('https://reqres.in/api')
+        .post('/register')
+        .send(payload);
+
+      chai.expect(response).to.have.status(200);
+      chai.expect(response.body).to.have.property('token');
+    });
   });
 
-  it('should return a 200 status code and an access token', async () => {
-    response = await request.post('/register').send(payload);
+  describe('Unsuccessful registration with invalid email and password', () => {
+    it('should return a 400 error', async () => {
+      const payload = {
+        email: faker.internet.email(),
+        password: 'pistol',
+      };
 
-    expect(response.status).toBe(200);
-    expect(response.body.token).toBeDefined();
+      const response = await chai.request('https://reqres.in/api')
+        .post('/register')
+        .send(payload);
+
+      chai.expect(response).to.have.status(400);
+    });
   });
 });

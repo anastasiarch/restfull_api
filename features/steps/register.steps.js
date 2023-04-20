@@ -2,7 +2,7 @@ const { Given, When, Then } = require('cucumber');
 const config = require('../../config/config');
 const request = require('supertest')(config.baseUrl);
 const { expect } = require('chai');
-
+const faker = require('faker');
 
 let payload = null;
 let response = null;
@@ -11,6 +11,13 @@ Given('I have a valid registration payload', function () {
   payload = {
     email: 'eve.holt@reqres.in',
     password: 'pistol',
+  };
+});
+
+Given('I have an invalid registration payload', function () {
+  payload = {
+    email: faker.internet.email(),
+    password: faker.internet.password(),
   };
 });
 
