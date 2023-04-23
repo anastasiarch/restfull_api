@@ -22,7 +22,10 @@ Given('I have an invalid registration payload', function () {
 });
 
 When('I send a POST request to "/register"', async function () {
-  response = await request.post('/register').send(payload);
+  response = await request
+  .post('/register')
+  .send(payload)
+  .set('Accept', 'application/json');
 });
 
 Then('I should receive a status code of {int}', function (statusCode) {
@@ -30,5 +33,5 @@ Then('I should receive a status code of {int}', function (statusCode) {
 });
 
 Then('the response should include an access token', function () {
-  expect(response.body.token).to.exist;
+  expect(response.body).to.have.property('token');
 });
