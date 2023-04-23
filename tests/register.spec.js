@@ -1,38 +1,51 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const faker = require('faker');
+const chai = require("chai");
+const chaiHttp = require("chai-http");
+const { expect } = chai;
+const RegisterModel = require("../scr/models/register");
+const RegisterApi = require("../scr/wrapper/registerApi");
+const config = require("../config/config");
+const testData = require("../tests/testData/registerPayload");
 
 chai.use(chaiHttp);
 
-describe('Register API', () => {
-  describe('Successful registration', () => {
-    it('should register a user and return a token', async () => {
-      const payload = {
-        email: 'eve.holt@reqres.in',
-        password: 'pistol',
-      };
+describe("Register API", () => {
+  let registerApi;
 
-      const response = await chai.request('https://reqres.in/api')
-        .post('/register')
-        .send(payload);
+  before(() => {
+    const baseUrl = config.baseUrl;
+    registerApi = new RegisterApi(baseUrl);
+  });
 
-      chai.expect(response).to.have.status(200);
-      chai.expect(response.body).to.have.property('token');
+  describe("Successful registration", () => {
+    let payload;
+
+    before(() => {
+      payload = new RegisterModel(testData.validUser);
+    });
+
+    it("should register a user and return a token", async () => {
+      const response = await registerApi.register(payload);
+
+      expect(response.status).to.equal(200);
+      expect(response.body).to.have.property("token");
     });
   });
 
-  describe('Unsuccessful registration with invalid email and password', () => {
-    it('should return a 400 error', async () => {
-      const payload = {
-        email: faker.internet.email(),
-        password: 'pistol',
-      };
+  describe("Unsuccessful registration with invalid email and password", () => {
+    let payload;
 
-      const response = await chai.request('https://reqres.in/api')
-        .post('/register')
-        .send(payload);
-
-      chai.expect(response).to.have.status(400);
+    before(() => {
+      payload = new RegisterModel(testData.invalidUser);
     });
+
+    it("should return a 400 error", async () => {
+      const response = await registerApi.register(payload);
+
+      expect(response).to.have.status(400);
+    });
+  });
+
+  after(() => {
+    // clean up the test environment
   });
 });

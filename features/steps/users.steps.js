@@ -16,5 +16,12 @@ Then('I should receive a response with status code {int}', (statusCode) => {
 });
 
 Then('the response should include a list of users', () => {
-  expect(response.body.data).to.be.an('array');
+    const users = response.body.data;
+    expect(users).to.be.an('array');
+    expect(users).to.not.be.empty;
+    expect(users[0]).to.have.property('id');
+    expect(users[0]).to.have.property('email');
+    expect(users[0]).to.have.property('first_name');
+    expect(users[0]).to.have.property('last_name');
+    expect(users[0]).to.have.property('avatar');
 });
