@@ -1,5 +1,7 @@
 const checkStatusCode = require('../helpers/checkStatusCode');
 const supertest = require("supertest");
+const endpoints = require('../../config/endpoints.json');
+
 
 class RegisterApi {
   constructor(baseUrl) {
@@ -7,7 +9,7 @@ class RegisterApi {
   }
 
   async register(payload) {
-    const response = await this.request.post("/register").send({
+    const response = await this.request.post(endpoints.register).send({
       email: payload.email,
       password: payload.password,
     });

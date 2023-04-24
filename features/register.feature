@@ -10,3 +10,8 @@ Feature: Register API
     Given I have an invalid registration payload
     When I send a POST request to register"
     Then I should receive a status code of 400
+
+  Scenario: Unsuccessful registration with email only
+    Given I have only email
+    When I send a POST request to register"
+    Then I should receive a status code of 400

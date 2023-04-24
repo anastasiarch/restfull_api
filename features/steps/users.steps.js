@@ -2,6 +2,7 @@ const { Given, When, Then } = require('cucumber');
 const config = require('../../config/config');
 const request = require('supertest')(config.baseUrl);
 const { expect } = require('chai');
+const endpoints = require('../../config/endpoints.json');
 
 let response;
 

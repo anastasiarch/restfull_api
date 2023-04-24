@@ -7,5 +7,8 @@ module.exports = {
       email: 'invalid_email',
       password: 'short',
     },
+    emailOnly: {
+        email: 'test@test.com',
+      },
   };
   
