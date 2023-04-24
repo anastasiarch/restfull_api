@@ -45,6 +45,20 @@ describe("Register API", () => {
     });
   });
 
+  describe("Unsuccessful registration with email only", () => {
+    let payload;
+
+    before(() => {
+      payload = new RegisterModel(testData.emailOnly);
+    });
+
+    it("should return a 400 error", async () => {
+      const response = await registerApi.register(payload);
+
+      expect(response).to.have.status(400);
+    });
+  });
+
   after(() => {
     // clean up the test environment
   });

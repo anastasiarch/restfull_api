@@ -1,0 +1,6 @@
+{
+    "register": "/register",
+    "login": "/login",
+    "users": "/users"
+  }
+  
